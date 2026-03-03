@@ -6,11 +6,12 @@ import { useState } from "react";
 interface register {
   username:string,
   email:string,
-  password:string
+  password:string,
+  profileimage:null
 }
 
 export default function SignUp() {
-  const [formdata , setformdata] = useState({
+  const [formdata , setformdata] = useState<register>({
     username:"",
     email:"",
     password:"",
@@ -50,9 +51,8 @@ export default function SignUp() {
 
     console.log("user register successfully");
 
-  } catch (error) {
-    const err = error as AxiosError<any>;
-    console.log(err.response?.data?.message);
+  } catch (error:any) {
+    console.log(error.response?.data?.message);
   }
 };
 
