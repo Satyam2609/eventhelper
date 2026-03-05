@@ -1,5 +1,7 @@
+"use client"
 import axios from "axios"
-import React, { useState } from "react"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 interface shop {
   shopcat:string,
@@ -14,6 +16,7 @@ export default function ShopSearch({setsearchshop}:props){
     shopcat:"",
     location:""
   })
+  const router = useRouter()
  
 const handlechanges = (e:React.ChangeEvent<HTMLInputElement>) => {
   const {name , value} = e.target
@@ -27,7 +30,9 @@ const handlechanges = (e:React.ChangeEvent<HTMLInputElement>) => {
 
       })
 console.log(res.data)
-setsearchshop(res.data)
+setsearchshop(res.data.data)
+
+
       
     } catch (error:any) {
       console.log(error.response?.data?.message)
@@ -57,7 +62,7 @@ setsearchshop(res.data)
         <div className="flex flex-col w-full gap-4">
           <input
             type="text"
-            placeholder="Enter location"
+            placeholder="Enter shop`"
             onChange={handlechanges}
             name="shopcat"
             value={data.shopcat}
@@ -69,7 +74,7 @@ setsearchshop(res.data)
             onChange={handlechanges}
             name="location"
             value={data.location}
-            placeholder="Enter shop name"
+            placeholder="Enter location"
             className="h-11 w-full border border-black/30 rounded-xl px-4 outline-none focus:ring-2 focus:ring-[#bc8925]"
           />
         </div>

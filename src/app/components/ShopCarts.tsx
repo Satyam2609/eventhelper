@@ -1,6 +1,21 @@
 "use client";
 
+import { useState } from "react";
+import ShopSearch from "./ShopSearch";
+import { useParams } from "next/navigation";
+
+interface shopcart {
+  _id:string,
+  shopImage:string,
+  shopName:string,
+ description:string,
+ rating:number
+
+}
+
 export default function ShopCarts() {
+  const [datac , setdata] = useState<shopcart[]>([])
+  console.log("dr",datac)
 
   const data = [
   {
@@ -62,6 +77,8 @@ export default function ShopCarts() {
 ];
 
   return (
+    <>
+    <ShopSearch setsearchshop={setdata}/> 
     <section className="w-full bg-[#fffaf0] py-16 px-6 flex justify-center">
 
       {/* OUTER CONTAINER */}
@@ -70,17 +87,18 @@ export default function ShopCarts() {
         {/* GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
 
-          {data.map((shop) => (
+          {datac.map((shop) => (
             <div
-              key={shop.id}
+              key={shop._id}
               className="bg-[#e3dfcc] rounded-2xl border border-gray-400 overflow-hidden
                          hover:scale-105 hover:shadow-xl transition duration-300"
             >
-
+              
+<a href={`/shopPage/${shop._id}`}>
               {/* IMAGE */}
               <img
-                src={shop.image}
-                alt={shop.title}
+                src={shop.shopImage}
+                alt={shop.shopName}
                 className="w-full h-42 object-cover"
               />
 
@@ -88,7 +106,7 @@ export default function ShopCarts() {
               <div className="p-4 flex flex-col gap-2">
 
                 <h2 className="font-semibold text-lg">
-                  {shop.title}
+                  {shop.shopName}
                 </h2>
 
                 <p className="text-sm text-gray-600 line-clamp-2">
@@ -101,6 +119,7 @@ export default function ShopCarts() {
 
               </div>
 
+</a>
             </div>
           ))}
 
@@ -109,5 +128,6 @@ export default function ShopCarts() {
       </div>
 
     </section>
+    </>
   );
 }

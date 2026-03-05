@@ -16,6 +16,8 @@ import {
   Twitter
 } from "lucide-react";
 import axios from "axios";
+import { useParams } from "next/navigation";
+
 
 export const shopsData = [
   {
@@ -64,9 +66,35 @@ const staggerContainer = {
   }
 };
 
+
+
 export default function Shop() {
 
-  const [data , setdata] = useState()
+  const [data , setdata] = useState<any>(null)
+  const {_id} = useParams()
+
+ 
+
+useEffect(() => {
+  const fetchdataa = async() => {
+    try {
+      const res = await axios.get(`http://localhost:4000/api/getshopdata/${_id}`)
+      setdata(res.data.finddata)
+      console.log(res.data.finddata)
+    } catch (error:any) {
+      console.log(error.response?.data?.message)
+    }
+  }
+
+  if(_id){
+    fetchdataa()
+  }
+
+},[_id])
+
+if(!data){
+  return <div className="p-20 text-2xl">Loading...</div>
+}
 
   
   const shop = shopsData[0];
@@ -83,8 +111,8 @@ export default function Shop() {
           className="absolute inset-0"
         >
           <img
-            src={shop.heroImage}
-            alt={shop.name}
+            src={data.shopImage}
+            alt={data.shopName}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
@@ -103,7 +131,7 @@ export default function Shop() {
                 <span className="text-white text-sm font-medium">{shop.rating} Highly Rated</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
-                {shop.name}
+                {data.shopName}
               </h1>
               <div className="flex flex-wrap items-center gap-6 text-white/90">
                 <span className="flex items-center gap-2">
@@ -145,7 +173,7 @@ export default function Shop() {
                 <h2 className="text-sm font-bold uppercase tracking-widest text-indigo-600">Established Excellence</h2>
                 <h3 className="text-4xl font-bold leading-tight">About the Shop</h3>
                 <p className="text-xl text-gray-600 leading-relaxed font-light">
-                  {shop.description}
+                  {data.description}
                 </p>
               </div>
 
@@ -157,7 +185,7 @@ export default function Shop() {
                 viewport={{ once: true }}
                 className="grid md:grid-cols-3 gap-6"
               >
-                {shop.highlights.map((item, i) => (
+                {data.cartsreq.map((item:any, i:any) => (
                   <motion.div
                     key={i}
                     variants={fadeIn}
@@ -166,7 +194,7 @@ export default function Shop() {
                     <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                       {item.icon}
                     </div>
-                    <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                    <h4 className="text-xl font-bold mb-2">{item}</h4>
                     <p className="text-gray-500">{item.desc}</p>
                   </motion.div>
                 ))}
@@ -190,7 +218,7 @@ export default function Shop() {
             viewport={{ once: true }}
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
           >
-            {shop.services.map((service, i) => (
+            {data.services.map((service:any, i:any) => (
               <motion.div
                 key={i}
                 variants={fadeIn}
@@ -222,25 +250,25 @@ export default function Shop() {
               whileHover={{ scale: 0.98 }}
               className="md:col-span-2 md:row-span-2 overflow-hidden rounded-xl"
             >
-              <img src={shop.gallery[0]} className="w-full h-full object-cover" alt="Gallery" />
+              <img src={data.shopGallery[0]} className="w-full h-full object-cover" alt="Gallery" />
             </motion.div>
             <motion.div
               whileHover={{ scale: 0.98 }}
               className="overflow-hidden rounded-xl"
             >
-              <img src={shop.gallery[1]} className="w-full h-full object-cover" alt="Gallery" />
+              <img src={data.shopGallery[1]} className="w-full h-full object-cover" alt="Gallery" />
             </motion.div>
             <motion.div
               whileHover={{ scale: 0.98 }}
               className="overflow-hidden rounded-xl"
             >
-              <img src={shop.gallery[2]} className="w-full h-full object-cover" alt="Gallery" />
+              <img src={data.shopGallery[2]} className="w-full h-full object-cover" alt="Gallery" />
             </motion.div>
             <motion.div
               whileHover={{ scale: 0.98 }}
               className="md:col-span-2 overflow-hidden rounded-xl"
             >
-              <img src={shop.gallery[3]} className="w-full h-full object-cover" alt="Gallery" />
+              <img src={data.shopGallery[3]} className="w-full h-full object-cover" alt="Gallery" />
             </motion.div>
           </div>
         </section>
