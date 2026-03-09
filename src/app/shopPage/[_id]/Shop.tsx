@@ -288,7 +288,7 @@ if(!data){
             <p className="text-xl text-indigo-100">Experience premium quality and exceptional service at Urban Fashion Store. We're open daily from 10 AM to 9 PM.</p>
             <div className="flex flex-wrap justify-center gap-6 pt-8">
               <button className="bg-white text-indigo-600 px-10 py-5 rounded-full font-bold shadow-xl hover:bg-gray-50 transition-colors flex items-center gap-2">
-                <Phone className="w-5 h-5" /> Contact Now
+               <a href={`/adminuser`}> <Phone className="w-5 h-5" /> Contact Now</a>
               </button>
               <div className="flex items-center gap-4">
                 <button className="p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-colors">
