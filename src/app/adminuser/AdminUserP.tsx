@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import { useParams } from "next/navigation";
 
 // Mock data for orders
 const ORDERS = [
@@ -47,8 +49,30 @@ const ORDERS = [
     },
 ];
 
+
+
 export default function AdminUserP() {
     const [activeTab, setActiveTab] = useState<"all" | "confirmed" | "pending">("all");
+    const [data , setdata] = useState()
+    const {_id} = useParams()
+
+    useEffect(() => {
+        const fetchdata = async() => {
+            try {
+                const res = await axios.get(`http://localhost:4000/api/getshoporder/${_id}` , {
+                    withCredentials:true
+                })
+
+                setdata(res.data)
+                
+                
+            } catch (error:any) {
+                console.log(error.response?.data?.message)
+                
+            }
+        }
+        fetchdata()
+    },[])
 
     const filteredOrders = ORDERS.filter(
         (order) => activeTab === "all" || order.status === activeTab

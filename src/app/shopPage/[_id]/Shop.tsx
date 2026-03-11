@@ -72,6 +72,19 @@ export default function Shop() {
 
   const [data , setdata] = useState<any>(null)
   const {_id} = useParams()
+  const orderId = _id
+ 
+
+  const sendorderId = async() => {
+    try {
+      const res = await axios.post(`http://localhost:4000/api/shopdataid` , {orderId}, {
+        withCredentials:true
+      })
+      
+    } catch (error:any) {
+      console.log(error.response?.data?.message)   
+    }
+  }
 
  
 
@@ -287,7 +300,7 @@ if(!data){
             <h3 className="text-4xl md:text-6xl font-bold">Visit Us Today</h3>
             <p className="text-xl text-indigo-100">Experience premium quality and exceptional service at Urban Fashion Store. We're open daily from 10 AM to 9 PM.</p>
             <div className="flex flex-wrap justify-center gap-6 pt-8">
-              <button className="bg-white text-indigo-600 px-10 py-5 rounded-full font-bold shadow-xl hover:bg-gray-50 transition-colors flex items-center gap-2">
+              <button onClick={sendorderId} className="bg-white text-indigo-600 px-10 py-5 rounded-full font-bold shadow-xl hover:bg-gray-50 transition-colors flex items-center gap-2">
                <a href={`/adminuser`}> <Phone className="w-5 h-5" /> Contact Now</a>
               </button>
               <div className="flex items-center gap-4">
