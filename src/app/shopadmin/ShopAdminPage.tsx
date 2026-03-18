@@ -40,7 +40,7 @@ export default function ShopAdminPage() {
 
     fetchdata()
 
-  }, [])
+  }, [data])
 
 
   const sendpermission = async (orderId: string, value: "yes" | "no") => {

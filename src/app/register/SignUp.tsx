@@ -4,71 +4,71 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 interface register {
-  username:string,
-  email:string,
-  password:string,
-  profileimage:null
+  username: string,
+  email: string,
+  password: string,
+  profileimage: null
 }
 
 export default function SignUp() {
-  const [formdata , setformdata] = useState<register>({
-    username:"",
-    email:"",
-    password:"",
-    profileimage:null
+  const [formdata, setformdata] = useState<register>({
+    username: "",
+    email: "",
+    password: "",
+    profileimage: null
   })
 
-  const handlechanges = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const {name , value , type , files} = e.target;
-    setformdata((prev) => ({...prev , [name]: type === "file" ? files : value}))
+  const handlechanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, files } = e.target;
+    setformdata((prev) => ({ ...prev, [name]: type === "file" ? (files ? files[0] : null) : value }))
 
   }
 
-   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  try {
-    const formdatasend = new FormData();
+    try {
+      const formdatasend = new FormData();
 
-    formdatasend.append("username", formdata.username);
-    formdatasend.append("email", formdata.email);
-    formdatasend.append("password", formdata.password);
+      formdatasend.append("username", formdata.username);
+      formdatasend.append("email", formdata.email);
+      formdatasend.append("password", formdata.password);
 
-    if (formdata.profileimage) {
-      formdatasend.append("profileimage", formdata.profileimage);
-    }
-
-    const res = await axios.post(
-      "http://localhost:4000/api/register",
-      formdatasend,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      if (formdata.profileimage) {
+        formdatasend.append("profileimage", formdata.profileimage);
       }
-    );
 
-    console.log("user register successfully");
+      const res = await axios.post(
+        "http://localhost:4000/api/register",
+        formdatasend,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-  } catch (error:any) {
-    console.log(error.response?.data?.message);
-  }
-};
+      console.log("user register successfully");
+
+    } catch (error: any) {
+      console.log(error.response?.data?.message);
+    }
+  };
 
   const cards = [
-    { id: 1, x: "5%", y: "75%", delay: 0.2, duration: 4    , opacity:0.2},
-    { id: 2, x: "12%", y: "25%", delay: 0.4, duration: 5   , opacity:0.4},
-    { id: 3, x: "20%", y: "8%", delay: 0.1, duration: 3.8  , opacity:0.7},
-    { id: 4, x: "85%", y: "65%", delay: 0.6, duration: 4.5 , opacity:0.6},
-    { id: 5, x: "75%", y: "15%", delay: 0.3, duration: 4.2 , opacity:0.2},
-    { id: 6, x: "40%", y: "85%", delay: 0.5, duration: 5.2 , opacity:0.5},
-    { id: 7, x: "60%", y: "10%", delay: 0.7, duration: 4.8 , opacity:0.7},
-    { id: 8, x: "90%", y: "35%", delay: 0.9, duration: 5.5 , opacity:0.2},
-    { id: 9, x: "63%", y: "35%", delay: 0.9, duration: 5.5 , opacity:0.3},
-    { id: 10, x: "26%", y: "35%", delay: 0.9, duration: 5.5 , opacity:0.6},
-    { id: 11, x: "20%", y: "75%", delay: 0.9, duration: 5.5 , opacity:0.3},
-    { id: 12, x: "90%", y: "35%", delay: 0.9, duration: 5.5 , opacity:0.7},
+    { id: 1, x: "5%", y: "75%", delay: 0.2, duration: 4, opacity: 0.2 },
+    { id: 2, x: "12%", y: "25%", delay: 0.4, duration: 5, opacity: 0.4 },
+    { id: 3, x: "20%", y: "8%", delay: 0.1, duration: 3.8, opacity: 0.7 },
+    { id: 4, x: "85%", y: "65%", delay: 0.6, duration: 4.5, opacity: 0.6 },
+    { id: 5, x: "75%", y: "15%", delay: 0.3, duration: 4.2, opacity: 0.2 },
+    { id: 6, x: "40%", y: "85%", delay: 0.5, duration: 5.2, opacity: 0.5 },
+    { id: 7, x: "60%", y: "10%", delay: 0.7, duration: 4.8, opacity: 0.7 },
+    { id: 8, x: "90%", y: "35%", delay: 0.9, duration: 5.5, opacity: 0.2 },
+    { id: 9, x: "63%", y: "35%", delay: 0.9, duration: 5.5, opacity: 0.3 },
+    { id: 10, x: "26%", y: "35%", delay: 0.9, duration: 5.5, opacity: 0.6 },
+    { id: 11, x: "20%", y: "75%", delay: 0.9, duration: 5.5, opacity: 0.3 },
+    { id: 12, x: "90%", y: "35%", delay: 0.9, duration: 5.5, opacity: 0.7 },
   ];
 
   return (
@@ -111,12 +111,26 @@ export default function SignUp() {
       ))}
 
       {/* FORM */}
-      <form className="w-full max-w-md p-8 rounded-2xl space-y-5 z-10">
+      <form onSubmit={handleSubmit} className="w-full max-w-md p-8 rounded-2xl space-y-5 z-10">
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium">Profile Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handlechanges}
+            name="profileimage"
+            className="border px-4 py-2 mt-2 rounded-xl outline-none focus:ring-2 focus:ring-black/20 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-800"
+          />
+        </div>
         <div className="flex flex-col">
           <label className="text-sm font-medium">Username</label>
           <input
             type="text"
             placeholder="Enter your username"
+            onChange={handlechanges}
+            name="username"
+            value={formdata.username}
             className="border px-4 py-2 mt-2 rounded-xl outline-none focus:ring-2 focus:ring-black/20"
           />
         </div>
@@ -125,6 +139,9 @@ export default function SignUp() {
           <label className="text-sm font-medium">Email</label>
           <input
             type="email"
+            onChange={handlechanges}
+            name="email"
+            value={formdata.email}
             placeholder="Enter your email"
             className="border px-4 py-2 mt-2 rounded-xl outline-none focus:ring-2 focus:ring-black/20"
           />
@@ -134,6 +151,9 @@ export default function SignUp() {
           <label className="text-sm font-medium">Password</label>
           <input
             type="password"
+            onChange={handlechanges}
+            name="password"
+            value={formdata.password}
             placeholder="Enter your password"
             className="border px-4 py-2 mt-2 rounded-xl outline-none focus:ring-2 focus:ring-black/20"
           />

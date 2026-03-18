@@ -19,39 +19,7 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 
 
-export const shopsData = [
-  {
-    id: 1,
-    name: "Urban Fashion Store",
-    rating: 4.6,
-    reviewCount: 128,
-    location: "Delhi, India",
-    contact: "+91 9876543210",
-    heroImage: "/tentshop.png",
-    description:
-      "Urban Fashion Store provides modern clothing collections with premium quality fabrics and affordable pricing. Our goal is to make fashion accessible and comfortable for everyone. We specialize in contemporary styles that blend comfort with sophisticated aesthetics, ensuring you look your best for any occasion.",
-    gallery: [
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1591085686350-798c0f9faa7f?auto=format&fit=crop&q=80&w=800",
-    ],
-    highlights: [
-      { title: "Premium Quality", icon: <ShieldCheck className="w-6 h-6 text-indigo-600" />, desc: "Highest grade fabrics" },
-      { title: "Best Pricing", icon: <Tag className="w-6 h-6 text-emerald-600" />, desc: "Value for your money" },
-      { title: "Latest Trends", icon: <Zap className="w-6 h-6 text-amber-600" />, desc: "Updated weekly" },
-    ],
-    services: [
-      "Personalized Styling",
-      "Trial Rooms",
-      "Global Shipping",
-      "Easy Returns",
-      "Custom Tailoring",
-      "VIP Membership",
-    ],
-  },
-];
-
+2
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -110,7 +78,7 @@ if(!data){
 }
 
   
-  const shop = shopsData[0];
+  
 
   return (
     <main className="min-h-screen bg-[#fafaf9] py-20 text-gray-900 selection:bg-indigo-100 selection:text-indigo-900">
@@ -141,7 +109,7 @@ if(!data){
             >
               <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-full px-4 py-1.5 w-fit border border-white/30">
                 <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                <span className="text-white text-sm font-medium">{shop.rating} Highly Rated</span>
+                <span className="text-white text-sm font-medium">{data.rating} Highly Rated</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
                 {data.shopName}
@@ -149,11 +117,11 @@ if(!data){
               <div className="flex flex-wrap items-center gap-6 text-white/90">
                 <span className="flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-indigo-300" />
-                  {shop.location}
+                  {data.location}
                 </span>
                 <span className="flex items-center gap-2">
                   <Phone className="w-5 h-5 text-indigo-300" />
-                  {shop.contact}
+                  {data.contact}
                 </span>
               </div>
             </motion.div>
